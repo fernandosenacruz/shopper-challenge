@@ -1,20 +1,48 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import rideEstimate from '../services/rideEstimate';
 import rideService from '../services/ride';
 import geocodingService from '../services/geocode';
+import { validationResult } from 'express-validator';
+import StatusCodes from '../helpers/statusCodes';
+import MESSAGES from '../helpers/messages';
 
-// todo: tipar o retorno da função
-const rideController = async (req: Request, res: Response): Promise<any> => {
+const rideController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
-    const { customer_id, origin, destination } = req.body;
+    const { origin, destination } = req.body;
 
-    const geocodeOrigin = await geocodingService(origin.address);
-    if (geocodeOrigin.error)
-      return res.status(400).json({ error: geocodeOrigin.error });
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(StatusCodes.BAD_REQUEST).json({
+        message: MESSAGES.RIDE_BAD_REQUEST,
+        error_code: MESSAGES.INVALID_DATA,
+        error_description: errors.array()[0].msg,
+      });
+      return;
+    }
 
-    const geocodeDestination = await geocodingService(destination.address);
-    if (geocodeDestination.error)
-      return res.status(400).json({ error: geocodeDestination.error });
+    const geocodeOrigin = await geocodingService(origin);
+    if (geocodeOrigin.error) {
+      res.status(StatusCodes.BAD_REQUEST).json({
+        message: MESSAGES.GEOCODE_ERROR,
+        error_code: MESSAGES.INVALID_DATA,
+        error_description: geocodeOrigin.error,
+      });
+      return;
+    }
+
+    const geocodeDestination = await geocodingService(destination);
+    if (geocodeDestination.error) {
+      res.status(StatusCodes.BAD_REQUEST).json({
+        message: MESSAGES.GEOCODE_ERROR,
+        error_code: MESSAGES.INVALID_DATA,
+        error_description: geocodeDestination.error,
+      });
+      return;
+    }
 
     const { distanceMeters, durationSeconds } = await rideEstimate(
       geocodeOrigin,
@@ -30,13 +58,12 @@ const rideController = async (req: Request, res: Response): Promise<any> => {
       duration: durationSeconds,
       options,
       routeResponse: { distanceMeters, durationSeconds },
+      message: MESSAGES.RIDE_SUCCESS,
     };
 
-    res
-      .status(200)
-      .json({ message: 'Operação realizada com sucesso', response });
+    res.status(StatusCodes.OK).json({ response });
   } catch (error: any) {
-    res.status(500).json({ error: error });
+    next(error);
   }
 };
 
