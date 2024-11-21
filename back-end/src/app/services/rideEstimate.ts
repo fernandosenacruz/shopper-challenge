@@ -7,7 +7,7 @@ const BASE_URL = 'https://routes.googleapis.com/directions/v2:computeRoutes';
 
 export interface RideEstimateResponse {
   distanceMeters: number;
-  durationSeconds: number;
+  durationSeconds: string;
 }
 
 const rideEstimate = async (
@@ -35,7 +35,7 @@ const rideEstimate = async (
     const route = response.data.routes[0];
     return {
       distanceMeters: route.distanceMeters,
-      durationSeconds: route.duration.seconds,
+      durationSeconds: route.duration,
     };
   } catch (error: any) {
     console.error(

@@ -7,10 +7,6 @@ import geocodingService from '../services/geocode';
 const rideController = async (req: Request, res: Response): Promise<any> => {
   try {
     const { customer_id, origin, destination } = req.body;
-    console.log('entrou no rideController');
-    console.log('customer_id:', customer_id);
-    console.log('origin:', origin);
-    console.log('destination:', destination);
 
     const geocodeOrigin = await geocodingService(origin.address);
     if (geocodeOrigin.error)
@@ -28,12 +24,12 @@ const rideController = async (req: Request, res: Response): Promise<any> => {
     const options = await rideService(distanceMeters);
 
     const response = {
-      customer_id,
       origin: geocodeOrigin,
       destination: geocodeDestination,
-      distanceMeters,
-      durationSeconds,
+      distance: distanceMeters,
+      duration: durationSeconds,
       options,
+      routeResponse: { distanceMeters, durationSeconds },
     };
 
     res
