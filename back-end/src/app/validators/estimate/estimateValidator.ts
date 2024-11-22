@@ -1,8 +1,11 @@
-import { bodyRequiredValidator, diffAddressValidator } from '../validatorUtil';
+import {
+  bodyStringRequiredValidator,
+  diffAddressValidator,
+} from '../validatorUtil';
 
 export const getEstimateSchema = [
-  bodyRequiredValidator('customer_id'),
-  bodyRequiredValidator('origin'),
-  bodyRequiredValidator('destination'),
+  bodyStringRequiredValidator('customer_id'),
+  bodyStringRequiredValidator('origin'),
+  bodyStringRequiredValidator('destination'),
   diffAddressValidator('origin', 'destination'),
 ];

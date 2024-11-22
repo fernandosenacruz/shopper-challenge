@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Geocode } from './geocode';
+import MESSAGES from '../helpers/messages';
 
 const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
 
@@ -39,7 +40,7 @@ const rideEstimate = async (
     };
   } catch (error: any) {
     console.error(
-      'Erro ao consultar a API Routes:',
+      MESSAGES.API_ROUTE_ERROR,
       error.response?.data || error.message
     );
     throw new Error('Falha ao obter estimativa de rota');

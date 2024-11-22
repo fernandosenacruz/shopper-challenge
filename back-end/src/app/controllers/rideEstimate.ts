@@ -6,7 +6,7 @@ import { validationResult } from 'express-validator';
 import StatusCodes from '../helpers/statusCodes';
 import MESSAGES from '../helpers/messages';
 
-const rideController = async (
+const rideEstimateController = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -49,7 +49,7 @@ const rideController = async (
       geocodeDestination
     );
 
-    const options = await rideService(distanceMeters);
+    const options = await rideService.getRideEstimate({ distanceMeters });
 
     const response = {
       origin: geocodeOrigin,
@@ -67,4 +67,4 @@ const rideController = async (
   }
 };
 
-export default rideController;
+export default rideEstimateController;

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import MESSAGES from '../helpers/messages';
 
 const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
 const BASE_URL = 'https://maps.googleapis.com/maps/api/geocode/json';
@@ -22,7 +23,7 @@ const geocodingService = async (address: string): Promise<Geocode> => {
 
     if (data.status !== 'OK' || data.results.length === 0) {
       return {
-        error: `Erro ao buscar coordenadas: ${data.status}`,
+        error: `${MESSAGES.GEOCODE_ERROR}: ${data.status}`,
         latitude: 0,
         longitude: 0,
       };
@@ -35,8 +36,7 @@ const geocodingService = async (address: string): Promise<Geocode> => {
       longitude: location.lng,
     };
   } catch (error: any) {
-    console.error(`Erro na API Geocoding: ${error.message}`);
-    throw new Error('Não foi possível obter as coordenadas.');
+    throw new Error(`${MESSAGES.GEOCODE_ERROR}: ${error.message}`);
   }
 };
 

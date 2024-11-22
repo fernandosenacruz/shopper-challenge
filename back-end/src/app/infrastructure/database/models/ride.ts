@@ -7,6 +7,13 @@ export interface IRideDriver {
 
 export interface IRide extends Document {
   id: number;
+  customer_id: {
+    type: string;
+    required: true;
+    unique: true;
+    index: true;
+    ref: 'User';
+  };
   date: Date;
   origin: string;
   destination: string;
@@ -17,16 +24,16 @@ export interface IRide extends Document {
 }
 
 const RideSchema: Schema = new Schema({
-  id: { type: Number, required: true, unique: true, index: true },
+  id: { type: Number, required: true, unique: true },
+  customer_id: { type: String, required: true, index: true },
   date: { type: Date, required: true },
   origin: { type: String, required: true },
   destination: { type: String, required: true },
   distance: { type: Number, required: true },
   duration: { type: String, required: true },
   driver: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Driver',
-    required: true,
+    id: { type: Number, required: true },
+    name: { type: String, required: true },
   },
   value: { type: Number, required: true },
 });
