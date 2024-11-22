@@ -1,0 +1,47 @@
+services:
+  backend:
+    container_name: backend-shopper
+    build:
+      context: ./back-end
+      dockerfile: Dockerfile
+    volumes:
+      - ./back-end:/usr/src/app
+    ports:
+      - '8080:8080'
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD', 'lsof', '-t', '-i:8080']
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    env_file:
+      - .env
+    environment:
+      MONGO_URL: mongodb://rides-mongo:27017/rides
+      GOOGLE_API_KEY: ${GOOGLE_API_KEY}
+
+  db:
+    image: mongo:latest
+    restart: unless-stopped
+    shm_size: 256mb
+    container_name: rides-mongo
+    ports:
+      - 27017:27017
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh mongodb://rides-mongo:27017/rides --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+
+  frontend:
+    container_name: frontend-shopper
+    build:
+      context: ./front-end
+      dockerfile: Dockerfile
+    ports:
+      - '80:80'
+    depends_on:
+      - backend
