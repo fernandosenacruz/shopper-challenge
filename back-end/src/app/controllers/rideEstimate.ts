@@ -1,8 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
+import { validationResult } from 'express-validator';
+import handleErrorMessages, {
+  handleErrorRideBadRequest,
+} from '../handlers/handleErrorMessage';
 import rideEstimate from '../services/rideEstimate';
 import rideService from '../services/ride';
 import geocodingService from '../services/geocode';
-import { validationResult } from 'express-validator';
 import StatusCodes from '../helpers/statusCodes';
 import MESSAGES from '../helpers/messages';
 
@@ -16,31 +19,22 @@ const rideEstimateController = async (
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.status(StatusCodes.BAD_REQUEST).json({
-        message: MESSAGES.RIDE_BAD_REQUEST,
-        error_code: MESSAGES.INVALID_DATA,
-        error_description: errors.array()[0].msg,
-      });
+      const { status, json } = handleErrorRideBadRequest(errors.array()[0].msg);
+      res.status(status).json(json);
       return;
     }
 
     const geocodeOrigin = await geocodingService(origin);
     if (geocodeOrigin.error) {
-      res.status(StatusCodes.BAD_REQUEST).json({
-        message: MESSAGES.GEOCODE_ERROR,
-        error_code: MESSAGES.INVALID_DATA,
-        error_description: geocodeOrigin.error,
-      });
+      const { status, json } = handleErrorMessages(geocodeOrigin.error);
+      res.status(status).json(json);
       return;
     }
 
     const geocodeDestination = await geocodingService(destination);
     if (geocodeDestination.error) {
-      res.status(StatusCodes.BAD_REQUEST).json({
-        message: MESSAGES.GEOCODE_ERROR,
-        error_code: MESSAGES.INVALID_DATA,
-        error_description: geocodeDestination.error,
-      });
+      const { status, json } = handleErrorMessages(geocodeDestination.error);
+      res.status(status).json(json);
       return;
     }
 
