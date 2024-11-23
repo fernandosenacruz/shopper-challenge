@@ -9,6 +9,8 @@ const MESSAGES = {
   USER_NOT_FOUND: 'Usuário não encontrado',
   DRIVER_NOT_FOUND: 'Motorista não encontrado',
   RIDE_NOT_CREATED: 'Erro ao criar a corrida',
+  NO_RIDES_FOUND: 'NO_RIDES_FOUND',
+  NOT_FOUND: 'Nenhum registro encontrado',
 };
 
 export default MESSAGES;

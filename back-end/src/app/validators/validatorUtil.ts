@@ -1,4 +1,4 @@
-import { body } from 'express-validator';
+import { body, query } from 'express-validator';
 
 export const bodyStringRequiredValidator = (field: string) => {
   return body(field)
@@ -23,4 +23,12 @@ export const diffAddressValidator = (field1: string, field2: string) => {
     }
     return true;
   });
+};
+
+export const queryStringRequiredValidator = (field: string) => {
+  return query(field)
+    .exists({ checkNull: true, checkFalsy: true })
+    .withMessage(`${field} é obrigatório`)
+    .isString()
+    .withMessage(`${field} deve ser uma string`);
 };

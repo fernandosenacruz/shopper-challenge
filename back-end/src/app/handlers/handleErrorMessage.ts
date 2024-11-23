@@ -38,8 +38,8 @@ export const handleErrorRideBadRequest = (error: string) => {
   return {
     status: StatusCodes.BAD_REQUEST,
     json: {
-      message: MESSAGES.RIDE_BAD_REQUEST,
-      error_code: MESSAGES.INVALID_DATA,
+      message: MESSAGES.NOT_FOUND,
+      error_code: MESSAGES.NO_RIDES_FOUND,
       error_description: error,
     },
   };

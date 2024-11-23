@@ -82,6 +82,46 @@ const rideService = {
       throw new Error(error);
     }
   },
+
+  async getRidesByCustomerId({
+    customer_id,
+    driver_id,
+  }: {
+    customer_id: string;
+    driver_id?: number;
+  }) {
+    try {
+      const user = await userService.getUserById({
+        id: customer_id.toString(),
+      });
+
+      if (!user) return MESSAGES.USER_NOT_FOUND;
+
+      if (driver_id) {
+        const driver = await driverService.getDriverById({
+          id: driver_id,
+        });
+
+        if (!driver) return MESSAGES.DRIVER_NOT_FOUND;
+      }
+
+      const rides = await ride
+        .find(
+          {
+            customer_id,
+            ...(driver_id && { 'driver.id': driver_id }),
+          },
+          { _id: 0, __v: 0, customer_id: 0 }
+        )
+        .sort({ date: -1 });
+
+      if (!rides || rides.length === 0) return MESSAGES.NOT_FOUND;
+
+      return rides;
+    } catch (error: any) {
+      throw new Error(error);
+    }
+  },
 };
 
 export default rideService;
