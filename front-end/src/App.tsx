@@ -1,25 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import RideEstmate from './pages/RideEstimate';
+import RideConfirm from './pages/RideConfirm';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '80dvh',
+      }}
+    >
+      <Router>
+        <Routes>
+          <Route path="/" element={<RideEstmate />} />
+          <Route path="/ride/confirm" element={<RideConfirm />} />
+          <Route path="*" element={<div>Not Found</div>} />
+        </Routes>
+      </Router>
+    </main>
   );
 }
 
