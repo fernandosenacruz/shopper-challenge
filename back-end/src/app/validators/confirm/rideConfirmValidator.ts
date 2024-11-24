@@ -4,9 +4,9 @@ import {
   bodyNumberRequiredValidator,
 } from '../validatorUtil';
 
-export const postRideConfirmSchema = [...getEstimateSchema];
+export const patchRideConfirmSchema = [...getEstimateSchema];
 
-postRideConfirmSchema.push(
+patchRideConfirmSchema.push(
   bodyNumberRequiredValidator('distance'),
   bodyStringRequiredValidator('duration'),
   bodyNumberRequiredValidator('value'),

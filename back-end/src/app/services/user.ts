@@ -11,7 +11,7 @@ const userService = {
 
       if (!registredUser || !registredUser.id) return;
 
-      return { id: registredUser.id };
+      return { id: registredUser.id, name: registredUser.name };
     } catch (error: any) {
       throw new Error(error);
     }

@@ -2,15 +2,16 @@ import { NextFunction, Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 import StatusCodes from '../helpers/statusCodes';
 import MESSAGES from '../helpers/messages';
-import rideService from '../services/ride';
+import userService from '../services/user';
 import handleErrorMessages from '../handlers/handleErrorMessage';
 
-const rideConfirmController = async (
+const userController = async (
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<void> => {
+) => {
   try {
+    const { id } = req.query;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       res.status(StatusCodes.BAD_REQUEST).json({
@@ -20,21 +21,19 @@ const rideConfirmController = async (
       });
       return;
     }
-
-    const result = await rideService.patchRideConfirm(req.body);
-
-    if (typeof result === 'string' && result !== MESSAGES.RIDE_SUCCESS) {
+    const result = await userService.getUserById({ id: String(id) });
+    if (typeof result === 'string') {
       const { status, json } = handleErrorMessages(result);
       res.status(status).json(json);
     }
 
     res.status(StatusCodes.OK).json({
-      message: MESSAGES.RIDE_SUCCESS,
-      response: { success: true },
+      message: MESSAGES.USER_SUCCESS,
+      response: result,
     });
   } catch (error: any) {
     next(error);
   }
 };
 
-export default rideConfirmController;
+export default userController;
