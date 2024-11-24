@@ -21,7 +21,7 @@ const rideConfirmController = async (
       return;
     }
 
-    const result = await rideService.postRideConfirm(req.body);
+    const result = await rideService.patchRideConfirm(req.body);
 
     if (typeof result === 'string' && result !== MESSAGES.RIDE_SUCCESS) {
       const { status, json } = handleErrorMessages(result);

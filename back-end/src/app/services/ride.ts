@@ -31,7 +31,7 @@ const rideService = {
     }
   },
 
-  async postRideConfirm({
+  async patchRideConfirm({
     customer_id,
     origin,
     destination,
@@ -73,7 +73,16 @@ const rideService = {
         (newRide._id as string).toString().replace(/\D/g, '')
       );
 
-      const result = await ride.create(newRide);
+      const result = await ride.bulkWrite(
+        [
+          {
+            insertOne: {
+              document: newRide,
+            },
+          },
+        ],
+        { ordered: true }
+      );
 
       if (!result) return;
 

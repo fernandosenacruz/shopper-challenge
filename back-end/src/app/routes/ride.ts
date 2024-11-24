@@ -1,6 +1,6 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { getEstimateSchema } from '../validators/estimate/estimateValidator';
-import { postRideConfirmSchema } from '../validators/confirm/rideConfirmValidator';
+import { patchRideConfirmSchema } from '../validators/confirm/rideConfirmValidator';
 import { getRidesSchema } from '../validators/rides/ridesValidator';
 import rideEstimateController from '../controllers/rideEstimate';
 import rideConfirmController from '../controllers/rideConfirm';
@@ -16,9 +16,9 @@ ride.post(
   }
 );
 
-ride.post(
+ride.patch(
   '/ride/confirm',
-  postRideConfirmSchema,
+  patchRideConfirmSchema,
   async (req: Request, res: Response, next: NextFunction) => {
     await rideConfirmController(req, res, next);
   }
