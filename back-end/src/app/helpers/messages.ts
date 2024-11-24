@@ -6,6 +6,7 @@ const MESSAGES = {
   INVALID_DATA: 'INVALID_DATA',
   INVALID_DISTANCE: 'INVALID_DISTANCE',
   DISTANCE_NOT_ACEPTABLE: 'Quilometragem inválida para o motorista',
+  USER_SUCCESS: 'Usuário encontrado com sucesso',
   USER_NOT_FOUND: 'Usuário não encontrado',
   DRIVER_NOT_FOUND: 'Motorista não encontrado',
   RIDE_NOT_CREATED: 'Erro ao criar a corrida',
