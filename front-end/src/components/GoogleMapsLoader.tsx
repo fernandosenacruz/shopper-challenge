@@ -23,26 +23,20 @@ const GoogleMapsLoader: React.FC<GoogleMapsLoaderProps> = ({
     const existingScript = document.querySelector(
       'script[src*="https://maps.googleapis.com/maps/api/js"]'
     );
-    if (existingScript) {
-      document.head.removeChild(existingScript);
+    if (!existingScript) {
+      const script = document.createElement('script');
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`;
+      script.async = true;
+      script.defer = true;
+
+      script.onload = () => {
+        console.log('Google Maps API carregada!');
+        onLoad?.();
+      };
+
+      document.head.appendChild(script);
     }
-
-    const script = document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`;
-    script.async = true;
-    script.defer = true;
-
-    script.onload = () => {
-      console.log('Google Maps API carregada!');
-      onLoad?.();
-    };
-
-    document.head.appendChild(script);
-
-    return () => {
-      document.head.removeChild(script);
-    };
-  }, [apiKey, onLoad]);
+  }, []);
 
   return null;
 };

@@ -10,13 +10,16 @@ export const api = axios.create({
 
 export const getEstimate = async (payload: IBodyRideEstimate) => {
   try {
-    const response = await api.post('/ride/estimate', payload);
+    const result: { data: { response: IRideEstimate } } = await api.post(
+      '/ride/estimate',
+      payload
+    );
     return {
-      origin: response.data.response.origin,
-      destination: response.data.response.destination,
-      distance: response.data.response.distance,
-      duration: response.data.response.duration,
-      options: response.data.response.options,
+      origin: result.data.response.origin,
+      destination: result.data.response.destination,
+      distance: result.data.response.distance,
+      duration: result.data.response.duration,
+      options: result.data.response.options,
     };
   } catch (error: any) {
     console.error('Erro ao buscar estimativa:', error);

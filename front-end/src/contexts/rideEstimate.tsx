@@ -7,7 +7,7 @@ type ContextType = {
   customer: { id: string; name: string };
   setCustomer: Dispatch<SetStateAction<{ id: string; name: string }>>;
   rideEstimate: IRideEstimate;
-  setRideEstimate: Dispatch<SetStateAction<IRideEstimate>>;
+  setRideEstimate: (value: IRideEstimate) => void;
 };
 
 export const DEFAULT_VALUE = {
@@ -36,15 +36,14 @@ const RideEstimateProvider = ({ children }: props) => {
     DEFAULT_VALUE.rideEstimate
   );
 
-  const value = React.useMemo(
-    () => ({
+  const value = React.useMemo(() => {
+    return {
       customer,
       setCustomer,
       rideEstimate,
       setRideEstimate,
-    }),
-    [customer, setCustomer, rideEstimate, setRideEstimate]
-  );
+    };
+  }, [customer, setCustomer, rideEstimate, setRideEstimate]);
 
   return (
     <RideEstimateContext.Provider value={value}>

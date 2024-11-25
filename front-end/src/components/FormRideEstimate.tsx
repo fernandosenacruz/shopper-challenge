@@ -1,4 +1,4 @@
-import { useContext, useRef, useState, useEffect } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RideEstimateContext } from '../contexts/rideEstimate';
 import { Box, Button, TextField } from '@mui/material';
@@ -20,8 +20,7 @@ const FormRideEstimate = () => {
   const [openAlert, setOpenAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
 
-  const { setCustomer, rideEstimate, setRideEstimate } =
-    useContext(RideEstimateContext);
+  const { setCustomer, setRideEstimate } = useContext(RideEstimateContext);
 
   const originRef = useRef<google.maps.places.Autocomplete | null>(null);
   const destinationRef = useRef<google.maps.places.Autocomplete | null>(null);
@@ -68,7 +67,6 @@ const FormRideEstimate = () => {
         origin,
         destination,
       });
-
       setRideEstimate(response);
       navigate('/ride/confirm');
     } catch (error: any) {
@@ -87,62 +85,62 @@ const FormRideEstimate = () => {
 
   return (
     <>
-      {/* <GoogleMapsLoader apiKey={GOOGLE_API_KEY} onLoad={handleGoogleLoad} /> */}
-      {/* {isGoogleLoaded && ( */}
-      <Box
-        component="form"
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 2,
-          maxWidth: '90dvw',
-          margin: '0 auto',
-        }}
-        onSubmit={handleSubmit}
-        autoComplete="off"
-      >
-        <Grid container spacing={2}>
-          <Grid size={{ xs: 12, sm: 6 }} offset={{ xs: 2, sm: 3 }}>
-            <TextField
-              label="Id do Cliente"
-              variant="outlined"
-              value={customerId}
-              required
-              fullWidth
-              onChange={(e) => setCustomerId(e.target.value)}
-              onBlur={() => fetchCustomer(customerId)}
-            />
-          </Grid>
-          <Grid size={{ xs: 12, sm: 6 }} offset={{ xs: 2, sm: 3 }}>
-            <TextField
-              label={customerError ? `${customerError}` : 'Nome do Cliente'}
-              variant="filled"
-              value={customerName}
-              disabled
-              fullWidth
-              error={!!customerError}
-            />
-          </Grid>
-          <Grid size={{ xs: 12, sm: 6 }} offset={{ xs: 2, sm: 3 }}>
-            {/* <Autocomplete
+      <GoogleMapsLoader apiKey={GOOGLE_API_KEY} onLoad={handleGoogleLoad} />
+      {isGoogleLoaded && (
+        <Box
+          component="form"
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 2,
+            maxWidth: '90dvw',
+            margin: '0 auto',
+          }}
+          onSubmit={handleSubmit}
+          autoComplete="off"
+        >
+          <Grid container spacing={2}>
+            <Grid size={{ xs: 12, sm: 6 }} offset={{ xs: 2, sm: 3 }}>
+              <TextField
+                label="Id do Cliente"
+                variant="outlined"
+                value={customerId}
+                required
+                fullWidth
+                onChange={(e) => setCustomerId(e.target.value)}
+                onBlur={() => fetchCustomer(customerId)}
+              />
+            </Grid>
+            <Grid size={{ xs: 12, sm: 6 }} offset={{ xs: 2, sm: 3 }}>
+              <TextField
+                label={customerError ? `${customerError}` : 'Nome do Cliente'}
+                variant="filled"
+                value={customerName}
+                disabled
+                fullWidth
+                error={!!customerError}
+              />
+            </Grid>
+            <Grid size={{ xs: 12, sm: 6 }} offset={{ xs: 2, sm: 3 }}>
+              <Autocomplete
                 options={options}
                 onLoad={(instance) => {
                   originRef.current = instance;
                 }}
                 onPlaceChanged={() => handlePlaceChange(originRef, setOrigin)}
-              > */}
-            <TextField
-              label="Origem"
-              variant="outlined"
-              value={origin}
-              required
-              fullWidth
-              onChange={(e) => setOrigin(e.target.value)}
-            />
-            {/* </Autocomplete> */}
-          </Grid>
-          <Grid size={{ xs: 12, sm: 6 }} offset={{ xs: 2, sm: 3 }}>
-            {/* <Autocomplete
+              >
+                <TextField
+                  label="Origem"
+                  variant="outlined"
+                  value={origin}
+                  required
+                  fullWidth
+                  onChange={(e) => setOrigin(e.target.value)}
+                />
+              </Autocomplete>
+            </Grid>
+            <Grid size={{ xs: 12, sm: 6 }} offset={{ xs: 2, sm: 3 }}>
+              <Autocomplete
                 options={options}
                 onLoad={(instance) => {
                   destinationRef.current = instance;
@@ -150,25 +148,25 @@ const FormRideEstimate = () => {
                 onPlaceChanged={() =>
                   handlePlaceChange(destinationRef, setDestination)
                 }
-              > */}
-            <TextField
-              label="Destino"
-              variant="outlined"
-              value={destination}
-              required
-              fullWidth
-              onChange={(e) => setDestination(e.target.value)}
-            />
-            {/* </Autocomplete> */}
+              >
+                <TextField
+                  label="Destino"
+                  variant="outlined"
+                  value={destination}
+                  required
+                  fullWidth
+                  onChange={(e) => setDestination(e.target.value)}
+                />
+              </Autocomplete>
+            </Grid>
+            <Grid offset={{ xs: 2, sm: 3 }}>
+              <Button type="submit" color="success" variant="contained">
+                Estimar
+              </Button>
+            </Grid>
           </Grid>
-          <Grid offset={{ xs: 2, sm: 3 }}>
-            <Button type="submit" color="success" variant="contained">
-              Estimar
-            </Button>
-          </Grid>
-        </Grid>
-      </Box>
-      {/* )} */}
+        </Box>
+      )}
       {openAlert && (
         <AlertDialog
           title="Erro"
