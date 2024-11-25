@@ -1,6 +1,6 @@
 import { useContext, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { RideEstimateContext } from '../contexts/rideEstimate';
+import { RideContext } from '../contexts/rideContext';
 import { Box, Button, TextField } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import { Autocomplete } from '@react-google-maps/api';
@@ -20,7 +20,7 @@ const FormRideEstimate = () => {
   const [openAlert, setOpenAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
 
-  const { setCustomer, setRideEstimate } = useContext(RideEstimateContext);
+  const { setCustomer, setRideEstimate } = useContext(RideContext);
 
   const originRef = useRef<google.maps.places.Autocomplete | null>(null);
   const destinationRef = useRef<google.maps.places.Autocomplete | null>(null);

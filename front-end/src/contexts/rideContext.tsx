@@ -1,5 +1,6 @@
 import React, { Dispatch, SetStateAction, createContext } from 'react';
 import { IRideEstimate } from '../interfaces/rideEstimate';
+import { IDriver } from '../interfaces/driver';
 
 type props = { children: React.ReactNode };
 
@@ -8,6 +9,8 @@ type ContextType = {
   setCustomer: Dispatch<SetStateAction<{ id: string; name: string }>>;
   rideEstimate: IRideEstimate;
   setRideEstimate: (value: IRideEstimate) => void;
+  driver: IDriver;
+  setDriver: (value: IDriver) => void;
 };
 
 export const DEFAULT_VALUE = {
@@ -21,20 +24,32 @@ export const DEFAULT_VALUE = {
     options: [],
   },
   setRideEstimate: () => {},
+  driver: {
+    id: 0,
+    name: '',
+    description: '',
+    review: { rating: 0, comment: '' },
+    value: 0,
+    vehicle: '',
+  },
+  setDriver: () => {},
 };
 
-export const RideEstimateContext = createContext<ContextType>({
+export const RideContext = createContext<ContextType>({
   customer: DEFAULT_VALUE.customer,
   setCustomer: DEFAULT_VALUE.setCustomer,
   rideEstimate: DEFAULT_VALUE.rideEstimate,
   setRideEstimate: DEFAULT_VALUE.setRideEstimate,
+  driver: DEFAULT_VALUE.driver,
+  setDriver: DEFAULT_VALUE.setDriver,
 });
 
-const RideEstimateProvider = ({ children }: props) => {
+const RideProvider = ({ children }: props) => {
   const [customer, setCustomer] = React.useState(DEFAULT_VALUE.customer);
   const [rideEstimate, setRideEstimate] = React.useState<IRideEstimate>(
     DEFAULT_VALUE.rideEstimate
   );
+  const [driver, setDriver] = React.useState<IDriver>(DEFAULT_VALUE.driver);
 
   const value = React.useMemo(() => {
     return {
@@ -42,14 +57,12 @@ const RideEstimateProvider = ({ children }: props) => {
       setCustomer,
       rideEstimate,
       setRideEstimate,
+      driver,
+      setDriver,
     };
-  }, [customer, setCustomer, rideEstimate, setRideEstimate]);
+  }, [customer, setCustomer, rideEstimate, setRideEstimate, driver, setDriver]);
 
-  return (
-    <RideEstimateContext.Provider value={value}>
-      {children}
-    </RideEstimateContext.Provider>
-  );
+  return <RideContext.Provider value={value}>{children}</RideContext.Provider>;
 };
 
-export default RideEstimateProvider;
+export default RideProvider;

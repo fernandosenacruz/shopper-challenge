@@ -1,18 +1,11 @@
+import { IDriver } from './driver';
+
 export interface IGeocode {
   latitude: number;
   longitude: number;
 }
 
-export interface IOption {
-  id: number;
-  name: string;
-  description: string;
-  vehicle: string;
-  review: {
-    rating: number;
-    comment: string;
-  };
-  value: number;
+export interface IOption extends IDriver {
   routeResponse: {
     distanceMeters: number;
     durationSeconds: number;

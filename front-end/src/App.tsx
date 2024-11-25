@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import RideEstmate from './pages/RideEstimate';
 import RideConfirm from './pages/RideConfirm';
-import RideEstimateProvider from './contexts/rideEstimate';
+import RideProvider from './contexts/rideContext';
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
         height: '80dvh',
       }}
     >
-      <RideEstimateProvider>
+      <RideProvider>
         <Router>
           <Routes>
             <Route path="/ride/confirm" element={<RideConfirm />} />
@@ -21,7 +21,7 @@ function App() {
             <Route path="*" element={<div>Not Found</div>} />
           </Routes>
         </Router>
-      </RideEstimateProvider>
+      </RideProvider>
     </main>
   );
 }
