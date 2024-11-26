@@ -20,8 +20,7 @@ const FormRideEstimate = () => {
   const [openAlert, setOpenAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
 
-  const { setCustomer, rideEstimate, setRideEstimate } =
-    useContext(RideContext);
+  const { setCustomer, setRideEstimate } = useContext(RideContext);
 
   const originRef = useRef<google.maps.places.Autocomplete | null>(null);
   const destinationRef = useRef<google.maps.places.Autocomplete | null>(null);

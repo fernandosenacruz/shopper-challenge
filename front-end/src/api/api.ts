@@ -44,13 +44,15 @@ export const patchConfirm = async (payload: any /* todo interface*/) => {
 
 export const getRides = async (customer_id: string, driver_id?: string) => {
   try {
-    let url = `/ride/?${customer_id}`;
-    if (driver_id) url += `&${driver_id}`;
-
-    const response = await api.get(url);
-    console.log(response.data);
+    let url = `/ride?customer_id=${customer_id}`;
+    if (driver_id) url += `&driver_id=${driver_id}`;
+    const result = await api.get(url);
+    return result.data.response;
   } catch (error: any) {
-    if (error && error.status === 404) return error.response.data;
+    if (error && (error.status === 404 || error.status === 400)) {
+      console.error('Erro ao buscar corridas:', error);
+      return error.response.data;
+    }
   }
 };
 
