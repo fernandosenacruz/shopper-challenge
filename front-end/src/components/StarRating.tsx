@@ -20,7 +20,7 @@ const StarRating = ({
         style={{
           fontSize: 'x-small',
           height: '2.6rem',
-          overflow: 'auto',
+          overflow: 'scroll',
           textAlign: 'justify',
         }}
       >

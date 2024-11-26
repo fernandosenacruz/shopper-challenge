@@ -20,7 +20,8 @@ const FormRideEstimate = () => {
   const [openAlert, setOpenAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
 
-  const { setCustomer, setRideEstimate } = useContext(RideContext);
+  const { setCustomer, rideEstimate, setRideEstimate } =
+    useContext(RideContext);
 
   const originRef = useRef<google.maps.places.Autocomplete | null>(null);
   const destinationRef = useRef<google.maps.places.Autocomplete | null>(null);
@@ -57,24 +58,28 @@ const FormRideEstimate = () => {
 
   const navigate = useNavigate();
 
-  const handleSubmit = async (event: React.FormEvent) => {
+  const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     setCustomer({ id: customerId, name: customerName });
 
-    try {
-      const response = await getEstimate({
-        customer_id: customerId,
-        origin,
-        destination,
-      });
-      setRideEstimate(response);
-      navigate('/ride/confirm');
-    } catch (error: any) {
-      console.log(error);
-      setAlertMessage(error.response.error_description);
-      setOpenAlert(true);
-      return;
-    }
+    setTimeout(async () => {
+      try {
+        const response = await getEstimate({
+          customer_id: customerId,
+          origin,
+          destination,
+        });
+        response.strOrigin = origin;
+        response.strDestination = destination;
+        console.log(response);
+        setRideEstimate(response);
+        navigate('/ride/confirm');
+      } catch (error: any) {
+        setAlertMessage(error.response.error_description);
+        setOpenAlert(true);
+        return;
+      }
+    }, 1000);
   };
 
   // Restrict to Brazil

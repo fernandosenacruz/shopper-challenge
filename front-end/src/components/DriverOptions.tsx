@@ -45,7 +45,11 @@ const DriverOptions = ({ drivers }: IDrivers) => {
               <Typography
                 variant="body2"
                 color="text.secondary"
-                sx={{ textAlign: 'justify' }}
+                sx={{
+                  height: '3rem',
+                  overflow: 'scroll',
+                  textAlign: 'justify',
+                }}
               >
                 {driver.description}
               </Typography>

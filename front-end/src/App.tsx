@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import RideEstmate from './pages/RideEstimate';
 import RideConfirm from './pages/RideConfirm';
 import RideProvider from './contexts/rideContext';
+import Rides from './pages/Rides';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Router>
           <Routes>
             <Route path="/ride/confirm" element={<RideConfirm />} />
+            <Route path="/rides" element={<Rides />} />
             <Route path="/" element={<RideEstmate />} />
             <Route path="*" element={<div>Not Found</div>} />
           </Routes>

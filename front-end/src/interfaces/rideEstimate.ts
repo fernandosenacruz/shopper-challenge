@@ -14,7 +14,9 @@ export interface IOption extends IDriver {
 
 export interface IRideEstimate {
   origin: IGeocode;
+  strOrigin?: string;
   destination: IGeocode;
+  strDestination?: string;
   distance: number;
   duration: string;
   options: IOption[];

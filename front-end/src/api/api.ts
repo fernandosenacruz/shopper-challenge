@@ -27,12 +27,18 @@ export const getEstimate = async (payload: IBodyRideEstimate) => {
   }
 };
 
-export const patchConfirm = async (payload: any) => {
+export const patchConfirm = async (payload: any /* todo interface*/) => {
   try {
     const response = await api.patch('/ride/confirm', payload);
     console.log(response.data);
   } catch (error: any) {
-    if (error && error.status === 404) return error.response.data;
+    if (
+      error &&
+      (error.status === 404 || error.status === 400 || error.status === 406)
+    ) {
+      console.error('Erro ao confirmar corrida:', error);
+      return error.response.data;
+    }
   }
 };
 

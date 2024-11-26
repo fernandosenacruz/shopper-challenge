@@ -32,14 +32,12 @@ const AlertDialog = ({
           textAlign: 'center',
           padding: '1rem',
           borderRadius: '1rem',
+          minWidth: '50vw',
+          maxWidth: '80vw',
         }}
       >
-        <DialogTitle id="alert-dialog-title" sx={{ width: '50dvw' }}>
-          {title}
-        </DialogTitle>
-        <DialogContent
-          sx={{ width: '50dvw', height: '10dvh', overflow: 'auto' }}
-        >
+        <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
+        <DialogContent sx={{ height: '10dvh', overflow: 'scroll' }}>
           <DialogContentText id="alert-dialog-description">
             {message}
           </DialogContentText>

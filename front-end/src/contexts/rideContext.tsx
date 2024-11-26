@@ -18,7 +18,9 @@ export const DEFAULT_VALUE = {
   setCustomer: () => {},
   rideEstimate: {
     origin: { latitude: 0, longitude: 0 },
+    strOrigin: '',
     destination: { latitude: 0, longitude: 0 },
+    strDestination: '',
     distance: 0,
     duration: '',
     options: [],
