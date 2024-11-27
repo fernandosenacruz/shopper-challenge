@@ -97,8 +97,8 @@ const FormRideEstimate = () => {
             display: 'flex',
             flexDirection: 'column',
             gap: 2,
-            maxWidth: '90dvw',
-            margin: '0 auto',
+            margin: '2rem auto',
+            padding: '1rem',
           }}
           onSubmit={handleSubmit}
           autoComplete="off"

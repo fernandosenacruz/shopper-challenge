@@ -17,10 +17,11 @@ const StarRating = ({
         readOnly
       />
       <p
+        title={review.comment}
         style={{
           fontSize: 'x-small',
-          height: '2.6rem',
-          overflow: 'scroll',
+          height: '2rem',
+          overflow: 'auto',
           textAlign: 'justify',
         }}
       >

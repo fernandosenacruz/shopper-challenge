@@ -9,9 +9,11 @@ function App() {
     <main
       style={{
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '80dvh',
+        flexDirection: 'column',
+        height: '100dvh',
+        width: '100vw',
+        margin: '0 auto',
+        padding: '0',
       }}
     >
       <RideProvider>

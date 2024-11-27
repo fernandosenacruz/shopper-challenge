@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IBodyRideEstimate, IRideEstimate } from '../interfaces/rideEstimate';
+import { IBodyRideEstimate, IRideEstimate } from '../interfaces/ride';
 
 export const api = axios.create({
   baseURL: 'http://localhost:8080',
@@ -59,6 +59,15 @@ export const getRides = async (customer_id: string, driver_id?: string) => {
 export const getCustomer = async (customer_id: string) => {
   try {
     const { data } = await api.get(`/customer?id=${customer_id}`);
+    return data.response;
+  } catch (error: any) {
+    if (error && error.status === 404) return error.response.data;
+  }
+};
+
+export const getDrivers = async () => {
+  try {
+    const { data } = await api.get('/driver');
     return data.response;
   } catch (error: any) {
     if (error && error.status === 404) return error.response.data;

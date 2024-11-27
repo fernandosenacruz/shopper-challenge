@@ -27,3 +27,30 @@ export interface IBodyRideEstimate {
   origin: string;
   destination: string;
 }
+
+export interface IBodyRideConfirm {
+  customer_id: string;
+  driver_id: string;
+  origin: string;
+  destination: string;
+  distance: number;
+  duration: string;
+  driver: IDriver;
+  value: number;
+}
+
+export interface IBodyRide {
+  customer_id: string;
+  driver_id: string;
+}
+
+export interface IRideDetailing {
+  id: number;
+  date: string;
+  origin: string;
+  destination: string;
+  distance: number;
+  duration: string;
+  driver: Partial<IDriver>;
+  value: number;
+}
