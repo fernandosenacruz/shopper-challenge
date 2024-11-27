@@ -21,6 +21,18 @@ const driverService = {
       throw new Error(error);
     }
   },
+  async getDrivers(): Promise<Partial<IDriver>[]> {
+    try {
+      const registredDrivers = await driver.find();
+
+      return registredDrivers.map((registredDriver) => ({
+        id: registredDriver.id,
+        name: registredDriver.name,
+      }));
+    } catch (error: any) {
+      throw new Error(error);
+    }
+  },
 };
 
 export default driverService;
