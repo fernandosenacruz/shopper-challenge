@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, createContext } from 'react';
-import { IRideEstimate } from '../interfaces/rideEstimate';
+import { IRideEstimate } from '../interfaces/ride';
 import { IDriver } from '../interfaces/driver';
 
 type props = { children: React.ReactNode };

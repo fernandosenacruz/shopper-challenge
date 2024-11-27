@@ -1,6 +1,10 @@
 FROM node:20-alpine
 WORKDIR /back-end
-COPY . .
+
+COPY package*.json ./
+
 RUN npm install
+COPY . .
+
+ENTRYPOINT [ "sh", "-c" ,"npm start" ]
 EXPOSE 8080
-ENTRYPOINT [ "sh", "-c" ,"npm run seed && npm start" ]
