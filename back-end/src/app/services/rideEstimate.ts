@@ -33,7 +33,7 @@ const rideEstimate = async (
       }
     );
 
-    const route = response.data.routes[0];
+    const route = response?.data?.routes?.[0];
     return {
       distanceMeters: route.distanceMeters,
       durationSeconds: route.duration,

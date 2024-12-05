@@ -4,7 +4,7 @@ import MESSAGES from '../helpers/messages';
 import handleErrorMessages from '../handlers/handleErrorMessage';
 import driverService from '../services/driver';
 
-const userController = async (
+const driverController = async (
   _req: Request,
   res: Response,
   next: NextFunction
@@ -25,4 +25,4 @@ const userController = async (
   }
 };
 
-export default userController;
+export default driverController;
